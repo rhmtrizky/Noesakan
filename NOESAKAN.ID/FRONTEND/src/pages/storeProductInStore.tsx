@@ -68,7 +68,12 @@ export function Rating({ rating, numReviews }: RatingProps) {
 export default function StoreProductInStore() {
   const [product, setProduct] = useState<any>([]);
 
-  const { handleCreateProduct, handleSubmit, coba } = UseProductCreate();
+  function formatRupiah(saldo: number) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(saldo);
+  }
 
   async function fetchData() {
     const token = localStorage.getItem('token');
@@ -79,19 +84,14 @@ export default function StoreProductInStore() {
         },
       });
       setProduct(res.data);
-      // console.log('data product', product);
     } catch (error) {
       console.error({ error: 'salah ya ni' });
     }
   }
 
-  // console.log('try', coba);
-
-  // console.log(product);
-
   useEffect(() => {
     fetchData();
-  }, [coba]);
+  }, []);
 
   return (
     <>
@@ -161,7 +161,7 @@ export default function StoreProductInStore() {
                       justifyContent={'space-between'}
                     >
                       <Text>{item?.store?.city}</Text>
-                      <Text>Rp. {item?.price}/kg</Text>
+                      <Text>{formatRupiah(item?.price)}/kg</Text>
                     </Flex>
                     <Rating
                       rating={data.rating}

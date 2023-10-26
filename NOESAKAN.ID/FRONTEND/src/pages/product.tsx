@@ -123,6 +123,13 @@ export default function Product() {
   const [inputCity, setInputCity] = useState<string>('');
   const [inputProductName, setInputProductName] = useState<string>('');
 
+  function formatRupiah(saldo: number) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(saldo);
+  }
+
   async function fetchDataAll() {
     try {
       const res = await API.get('/product');
@@ -401,7 +408,7 @@ export default function Product() {
                         justifyContent={'space-between'}
                       >
                         <Text>{item?.store?.city}</Text>
-                        <Text>Rp.{item?.price}/kg</Text>
+                        <Text>{formatRupiah(item?.price)}/kg</Text>
                       </Flex>
 
                       <Rating

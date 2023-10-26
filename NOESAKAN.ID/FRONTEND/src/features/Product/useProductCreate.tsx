@@ -4,7 +4,6 @@ import { IProducts } from '../../interfaces/Product';
 import { useNavigate } from 'react-router-dom';
 
 export default function UseProductCreate() {
-  const [coba, setCoba] = useState('');
   const navigate = useNavigate();
   const [form, setForm] = useState<IProducts>({
     productName: '',
@@ -65,7 +64,6 @@ export default function UseProductCreate() {
         },
       });
       setStore(res.data);
-      setCoba('oke');
     } catch (error) {
       console.error({ error: 'salah ya ni' });
     }
@@ -77,9 +75,7 @@ export default function UseProductCreate() {
 
   return {
     store,
-    coba,
     form,
-    setCoba,
     handleChange,
     handleSubmit,
     handleCreateProduct,

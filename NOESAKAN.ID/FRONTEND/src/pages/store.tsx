@@ -10,6 +10,8 @@ import FormCreateProduct from '../components/cardProduct';
 import API from '../lib/api';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDeleteProduct } from '../hooks/HooksDeleteProduct';
+import { GoAlert } from 'react-icons/go';
 
 function randomColor() {
   return Math.floor(Math.random() * 2);
@@ -82,6 +84,7 @@ export default function Store() {
 
   const [store, setStore] = useState<any>([]);
   const navigate = useNavigate();
+  const { iconAlert, alertDelete, isShowAlert } = useDeleteProduct();
 
   async function fetchData() {
     const token = localStorage.getItem('token');
@@ -110,6 +113,32 @@ export default function Store() {
             p={10}
             gap={10}
           >
+            {isShowAlert ? (
+              <Flex
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                bg={'white'}
+                mx={'auto'}
+                w={'300px'}
+                py={2}
+                borderRadius={10}
+                gap={1}
+              >
+                {iconAlert ? (
+                  <GoAlert
+                    fontSize="20px"
+                    color="red"
+                    fontWeight="bold"
+                  />
+                ) : (
+                  'whehe'
+                )}
+                <Text fontWeight={'600'}>{alertDelete}</Text>
+              </Flex>
+            ) : (
+              ''
+            )}
             <Box>
               <Image
                 borderRadius={10}
