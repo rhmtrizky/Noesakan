@@ -1,14 +1,8 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-} from "typeorm";
-import { Store } from "./Store";
-import { Rating } from "./Rating";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Store } from './Store';
+import { Rating } from './Rating';
 
-@Entity({ name: "products" })
+@Entity({ name: 'products' })
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
@@ -28,12 +22,12 @@ export class Product {
   @Column({ nullable: true })
   image: string;
 
-  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @ManyToOne(() => Store, (store) => store.products, {
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   stores: Store;
 

@@ -48,6 +48,7 @@ router.get('/product/user', authenticate, ProductController.find);
 router.get('/product/location/:city', ProductController.findByLoc);
 router.get('/product/productName/:productName', ProductController.findByProductName);
 router.get('/product/:id', ProductController.findOne);
+router.delete('/product/delete/:id', authenticate, ProductController.delete);
 router.get('/product', ProductController.findAll);
 // router.get('/product/:city', ProductController.findByLoc);
 router.post('/product/create', authenticate, upload('image'), ProductController.create);

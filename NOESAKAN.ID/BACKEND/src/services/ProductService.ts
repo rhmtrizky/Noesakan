@@ -11,8 +11,6 @@ class ProductService {
   private readonly storeRepository: Repository<Store> = AppDataSource.getRepository(Store);
 
   async find(req: Request, res: Response) {
-    console.log('req', res.locals.loginSession);
-
     try {
       const product = await this.productRepository.find({
         where: {
@@ -240,8 +238,30 @@ class ProductService {
     const id = parseInt(req.params.id);
 
     try {
-      const deletedThread = await this.productRepository.delete(id);
-      return res.status(200).json(deletedThread);
+      const product = await this.productRepository.findOne({
+        where: {
+          id: id,
+        },
+        relations: {
+          stores: {
+            users: true,
+          },
+        },
+      });
+      console.log('isi loginsession', res.locals.loginSession);
+      console.log('store nih', product);
+
+      if (!product) {
+        return res.status(400).json('Product is not found.');
+      }
+
+      if (product.stores.users.id === res.locals.loginSession.id) {
+        const deleteProduct = await this.productRepository.remove(product);
+        // return res.status(204).send();
+        return res.status(200).json(deleteProduct);
+      } else {
+        return res.status(403).json('You are not allowed to delete this product');
+      }
     } catch (err) {
       return res.status(500).json(err);
     }

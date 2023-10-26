@@ -8,7 +8,7 @@ import { Store } from '../entities/Store';
 class StoreService {
   private readonly storeRepository: Repository<Store> = AppDataSource.getRepository(Store);
 
-  async find(reg: Request, res: Response) {
+  async find(req: Request, res: Response) {
     try {
       const loginSession = res.locals.loginSession;
       const store = await this.storeRepository.findOne({

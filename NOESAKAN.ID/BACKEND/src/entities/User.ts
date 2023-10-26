@@ -1,15 +1,9 @@
-import {
-  Column,
-  Entity,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import { Replies } from "./Replies";
-import { Thread } from "./Thread";
-import { Rating } from "./Rating";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Replies } from './Replies';
+import { Thread } from './Thread';
+import { Rating } from './Rating';
 
-@Entity({ name: "users" })
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,7 +23,7 @@ export class User {
   @Column({ nullable: true })
   image: string;
 
-  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @OneToMany(() => Thread, (thread) => thread.users)
