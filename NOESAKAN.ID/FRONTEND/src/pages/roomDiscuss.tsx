@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { Avatar, Box, Button, Flex, Text, useColorModeValue, useMediaQuery } from '@chakra-ui/react';
 import { BiCommentDetail, BiLike } from 'react-icons/bi';
 import { PiShareFat } from 'react-icons/pi';
 import { useState } from 'react';
@@ -12,33 +12,36 @@ const colorList: string[] = ['#E53E3E', '#38A169', 'blue.300', '#9377EF', '#ED64
 
 export default function RoomDiscuss() {
   const [colorCode, setColorCode] = useState(colorList[randomColor()]);
+  const [isTablet] = useMediaQuery("(max-width: 768px)");
+  const [isMobile] = useMediaQuery("(max-width: 480px)");
 
   return (
     <Box
       h={'100vh'}
-      background={`linear-gradient(rgba(0, 0, 255, 0.1), rgba(255, 255, 255, 0.8))`}
-      pt={'60px'}
+      background={`linear-gradient(rgba(0, 0, 255, 0.1), rgba(255, 255, 255, 0.8)`}
+      pt={isMobile ? '40px' : '60px'}
     >
       <Flex
         h={'100%'}
-        px={'150px'}
+        px={isMobile ? '20px' : isTablet ? '40px' : '150px'}
         py={5}
+        flexDirection={isMobile ? 'column' : 'row'}
       >
         <Box
           position="relative"
           borderTopLeftRadius={'50%'}
-          borderBottomLeftRadius={'10'}
-          borderTopRightRadius={'10'}
-          borderBottomRightRadius={'10'}
-          w={'65%'}
+          borderBottomLeftRadius={isMobile ? '0' : '10'}
+          borderTopRightRadius={isMobile ? '10' : '10'}
+          borderBottomRightRadius={isMobile ? '10' : '10'}
+          w={isMobile ? '100%' : isTablet ? '80%' : '65%'}
           bgColor={`${colorCode}`}
           zIndex={1}
         >
           <Flex flexDirection={'column'}>
             <Text
               display={'flex'}
-              pt={'70px'}
-              fontSize={'40px'}
+              pt={isMobile ? '20px' : isTablet ? '40px' : '70px'}
+              fontSize={isMobile ? '30px' : isTablet ? '35px' : '40px'}
               fontWeight={'bold'}
               fontStyle={'italic'}
               color={'blue.900'}
@@ -46,43 +49,43 @@ export default function RoomDiscuss() {
               "Ruang Diskusi"
             </Text>
             <Text
-              mt={'30px'}
-              ml={'50px'}
-              w={'70%'}
+              mt={isMobile ? '20px' : isTablet ? '20px' : '30px'}
+              ml={isMobile ? '20px' : isTablet ? '20px' : '50px'}
+              w={isMobile ? '100%' : isTablet ? '90%' : '70%'}
               textAlign={'justify'}
               color={'white'}
             >
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad quod asperiores illum, explicabo est consectetur, alias voluptatum provident praesentium consequatur repellendus voluptates odio aspernatur quis beatae nemo quos ducimus voluptatibus!
             </Text>
             <Text
-              mt={'30px'}
-              ml={'50px'}
-              w={'70%'}
+              mt={isMobile ? '20px' : isTablet ? '20px' : '30px'}
+              ml={isMobile ? '20px' : isTablet ? '20px' : '50px'}
+              w={isMobile ? '100%' : isTablet ? '90%' : '70%'}
               fontWeight={'bold'}
-              fontSize={'20px'}
+              fontSize={isMobile ? '18px' : '20px'}
               fontStyle={'italic'}
               color={'blue.900'}
             >
               Makin banyak relasi,
             </Text>
             <Text
-              ml={'50px'}
+              ml={isMobile ? '20px' : isTablet ? '20px' : '50px'}
               fontWeight={'bold'}
-              fontSize={'20px'}
+              fontSize={isMobile ? '18px' : '20px'}
               fontStyle={'italic'}
               color={'blue.900'}
             >
               makin sehat dan bergizi.
             </Text>
             <Flex
-              mt={'30px'}
-              ml={'50px'}
+              mt={isMobile ? '20px' : isTablet ? '20px' : '30px'}
+              ml={isMobile ? '20px' : isTablet ? '20px' : '50px'}
               justifyContent="start"
               alignItems="center"
             >
               <Link to="/DiscussGrup">
                 <Button
-                  px={8}
+                  px={isMobile ? '6' : '8'}
                   bg={useColorModeValue('blue.900', 'gray.900')}
                   color={'white'}
                   rounded={'md'}
@@ -99,14 +102,14 @@ export default function RoomDiscuss() {
           </Flex>
         </Box>
         <Box
-          position="absolute" // Add position property
-          ml={'500px'}
-          mt={'45px'}
-          w={'40%'}
+          position={isMobile ? "static" : "absolute"}
+          ml={isMobile ? '20px' : isTablet ? '20px' : '500px'}
+          mt={isMobile ? '20px' : isTablet ? '20px' : '45px'}
+          w={isMobile ? '100%' : isTablet ? '80%' : '40%'}
           h={'520px'}
           bg={'white'}
           boxShadow={'2xl'}
-          borderRadius={20}
+          borderRadius={isMobile ? 0 : 20}
           zIndex={2}
         >
           <Flex

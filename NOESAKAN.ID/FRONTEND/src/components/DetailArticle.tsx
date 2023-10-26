@@ -1,4 +1,4 @@
-import { Box, Heading, Image, Text, Divider, HStack, useColorModeValue, Container, Button } from '@chakra-ui/react';
+import { Box, Heading, Image, Text, Divider, HStack, useColorModeValue, Container, Button, useMediaQuery, VStack, WrapItem, Wrap } from '@chakra-ui/react';
 import { useState } from 'react';
 
 interface BlogAuthorProps {
@@ -14,18 +14,16 @@ const BlogAuthor = (props: BlogAuthorProps) => {
       display="flex"
       alignItems="center"
     >
-      {/* ... (kode lainnya) */}
     </HStack>
   );
 };
 
 const Artikel = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isTablet] = useMediaQuery("(max-width: 768px)");
   return (
     <Container
       maxW={'7xl'}
@@ -36,7 +34,7 @@ const Artikel = () => {
         mt={10}
         display="flex"
         flexDirection={{ base: 'column', md: 'row' }}
-        alignItems="center" // Tambahkan ini untuk mengatur gambar dan teks ke tengah
+        alignItems="center" 
       >
         <Box
           flex="1"
@@ -61,7 +59,6 @@ const Artikel = () => {
               src={'https://images.unsplash.com/photo-1535443120147-89aef0b5327a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'}
               alt="some good alt text"
               objectFit="cover"
-              // Tambahkan properti width dan height di bawah ini untuk memperbesar gambar
               width="100%"
               height="300px"
             />
@@ -72,7 +69,7 @@ const Artikel = () => {
           flexDirection="column"
           justifyContent="center"
           marginTop={{ base: '3', md: '0' }}
-          marginLeft={{ base: '0', md: '3%' }} // Tambahkan ini untuk memberi jarak dari gambar
+          marginLeft={{ base: '0', md: '3%' }} 
         >
           <Heading marginTop="1">
             <Text
@@ -133,7 +130,7 @@ const Artikel = () => {
         mt={10}
         display="flex"
         flexDirection={{ base: 'column', md: 'row' }}
-        alignItems="center" // Tambahkan ini untuk mengatur gambar dan teks ke tengah
+        alignItems="center" 
       >
         <Box
           flex="1"
@@ -158,8 +155,6 @@ const Artikel = () => {
               src={'https://images.unsplash.com/photo-1587391028604-b370121a40f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80'}
               alt="some good alt text"
               objectFit="cover"
-              // Tambahkan properti width dan height di bawah ini untuk memperbesar gambar
-              width="100%"
               height="300px"
             />
           </Box>
@@ -169,7 +164,7 @@ const Artikel = () => {
           flexDirection="column"
           justifyContent="center"
           marginTop={{ base: '3', md: '0' }}
-          marginLeft={{ base: '0', md: '3%' }} // Tambahkan ini untuk memberi jarak dari gambar
+          marginLeft={{ base: '0', md: '3%' }}
         >
           <Heading marginTop="1">
             <Text
@@ -222,7 +217,7 @@ const Artikel = () => {
         mt={10}
         display="flex"
         flexDirection={{ base: 'column', md: 'row' }}
-        alignItems="center" // Tambahkan ini untuk mengatur gambar dan teks ke tengah
+        alignItems="center" 
       >
         <Box
           flex="1"
@@ -319,14 +314,17 @@ const Artikel = () => {
         >
           Rekomendasi Artikel untuk Dibaca:
         </Heading>
-        <HStack spacing="8">
-          {/* Artikel Pertama */}
+        {/* <HStack spacing="8"> */}
+        {/* <VStack spacing="8" align="stretch"> */}
+        <Wrap spacing="8" justify={{ base: 'start', md: 'center' }}>
+        <WrapItem>
           <Box
             maxW="sm"
             borderWidth="1px"
             borderRadius="lg"
             overflow="hidden"
             boxShadow="md"
+            
           >
             <Image
               src="https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" // Ganti URL gambar sesuai artikel pertama
@@ -335,6 +333,7 @@ const Artikel = () => {
               h="150px"
               w={'100%'}
             />
+             <VStack spacing={4} align="stretch">
             <Box p="4">
               <Text fontWeight="bold">Judul Artikel 1</Text>
               <Text
@@ -351,9 +350,11 @@ const Artikel = () => {
                 Baca Selengkapnya
               </Button>
             </Box>
+          </VStack>
           </Box>
-
+          </WrapItem>
           {/* Artikel Kedua */}
+          <WrapItem>
           <Box
             maxW="sm"
             borderWidth="1px"
@@ -385,8 +386,11 @@ const Artikel = () => {
               </Button>
             </Box>
           </Box>
+          </WrapItem>
+       
 
           {/* Artikel Ketiga */}
+          <WrapItem>
           <Box
             maxW="sm"
             borderWidth="1px"
@@ -418,8 +422,9 @@ const Artikel = () => {
               </Button>
             </Box>
           </Box>
-
+          </WrapItem>
           {/* Artikel Keempat */}
+          <WrapItem>
           <Box
             maxW="sm"
             borderWidth="1px"
@@ -451,7 +456,8 @@ const Artikel = () => {
               </Button>
             </Box>
           </Box>
-        </HStack>
+          </WrapItem>
+        </Wrap>
       </Box>
     </Container>
   );
