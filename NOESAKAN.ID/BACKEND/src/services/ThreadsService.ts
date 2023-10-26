@@ -1,22 +1,21 @@
-import { Repository } from "typeorm";
+import { Repository } from 'typeorm';
 
-import { AppDataSource } from "../data-source";
-import { Request, Response } from "express";
-import { Thread } from "../entities/Thread";
-import { Console } from "console";
-import { User } from "../entities/User";
-import { v2 as cloudinary } from "cloudinary";
+import { AppDataSource } from '../data-source';
+import { Request, Response } from 'express';
+import { Thread } from '../entities/Thread';
+import { Console } from 'console';
+import { User } from '../entities/User';
+import { v2 as cloudinary } from 'cloudinary';
 class ThreadService {
-  private readonly threadRepository: Repository<Thread> =
-    AppDataSource.getRepository(Thread);
+  private readonly threadRepository: Repository<Thread> = AppDataSource.getRepository(Thread);
 
   async find(reqQuery?: any, loginSession?: any) {
     try {
       const threads = await this.threadRepository.find({
-        relations: ["users", "replies"],
+        relations: ['users', 'replies'],
         take: 10,
         order: {
-          id: "DESC",
+          id: 'DESC',
         },
       });
       return threads.map((element) => ({
@@ -41,7 +40,7 @@ class ThreadService {
           id: id,
         },
 
-        relations: ["users", "replies"],
+        relations: ['users', 'replies'],
       });
       return {
         id: thread.id,
@@ -59,21 +58,21 @@ class ThreadService {
   }
 
   async create(req: Request, res: Response) {
-    const { content } = req.body;
+    const { content, image } = req.body;
     const loginSession = res.locals.loginSession;
-    console.log("LOGIN SESI NIH BOS", loginSession);
+    console.log('LOGIN SESI NIH BOS', loginSession);
 
     // console.log("USERLOGIN NIH",loginSession)
 
     try {
       const filename = res.locals.filename;
-      console.log("filenameSErVICE:", filename);
+      console.log('filenameSErVICE:', filename);
       const data = this.threadRepository.create({
         content: content,
-        image: filename,
+        image: image ? filename : '',
         users: loginSession,
       });
-      console.log("ini data boss", data);
+      console.log('ini data boss', data);
 
       const cloudinaryID = cloudinary.config({
         cloud_name: process.env.CLOUD_NAME,
@@ -81,19 +80,19 @@ class ThreadService {
         api_secret: process.env.API_SECRET,
       });
 
-      const cloudinaryResponse = await cloudinary.uploader.upload(
-        "./src/uploads/" + filename
-      );
+      if (filename) {
+        const cloudinaryResponse = await cloudinary.uploader.upload('./uploads/' + filename);
+        console.log('cloudinary apaan nih service:', cloudinaryResponse);
+        data.image = cloudinaryResponse.secure_url;
+      }
 
-      console.log("cloudinary apaan nih service:", cloudinaryResponse);
+      // const thread = this.threadRepository.create({
+      //   content: content ? data.content : '',
+      //   image: data.image ? cloudinaryResponse.secure_url : '',
+      //   users: data.users,
+      // });
 
-      const thread = this.threadRepository.create({
-        content: data.content,
-        image: cloudinaryResponse.secure_url,
-        users: data.users,
-      });
-
-      const createdThread = await this.threadRepository.save(thread);
+      const createdThread = await this.threadRepository.save(data);
 
       return res.status(200).json(createdThread);
     } catch (err) {
@@ -122,11 +121,11 @@ class ThreadService {
     });
     const data = req.body;
 
-    if (data.content != "") {
+    if (data.content != '') {
       threadz.content = data.content;
     }
 
-    if (data.content != "") {
+    if (data.content != '') {
       threadz.image = data.image;
     }
 
