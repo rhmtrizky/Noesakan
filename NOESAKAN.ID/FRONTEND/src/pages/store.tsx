@@ -12,6 +12,8 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDeleteProduct } from '../hooks/HooksDeleteProduct';
 import { GoAlert } from 'react-icons/go';
+import Loading from '../components/Loading';
+import UseProductCreate from '../features/Product/useProductCreate';
 
 function randomColor() {
   return Math.floor(Math.random() * 2);
@@ -85,6 +87,7 @@ export default function Store() {
   const [store, setStore] = useState<any>([]);
   const navigate = useNavigate();
   const { iconAlert, alertDelete, isShowAlert } = useDeleteProduct();
+  const { showLoading } = UseProductCreate();
 
   async function fetchData() {
     const token = localStorage.getItem('token');

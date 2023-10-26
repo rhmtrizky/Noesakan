@@ -4,7 +4,10 @@ import { IProducts } from '../../interfaces/Product';
 import { useNavigate } from 'react-router-dom';
 
 export default function UseProductCreate() {
+  const [showLoading, setShowLoading] = useState(false);
+  const [store, setStore] = useState<any>([]);
   const navigate = useNavigate();
+
   const [form, setForm] = useState<IProducts>({
     productName: '',
     price: '',
@@ -47,13 +50,14 @@ export default function UseProductCreate() {
       const response = await API.post('/product/create', formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      setForm(response.data);
+      window.location.reload();
       navigate('/MyStore/' + store.id);
       console.log('Selling Product Success', response.data);
     } catch (err) {
       console.log(err);
     }
   }
-  const [store, setStore] = useState<any>([]);
 
   async function fetchData() {
     const token = localStorage.getItem('token');
@@ -79,5 +83,6 @@ export default function UseProductCreate() {
     handleChange,
     handleSubmit,
     handleCreateProduct,
+    showLoading,
   };
 }

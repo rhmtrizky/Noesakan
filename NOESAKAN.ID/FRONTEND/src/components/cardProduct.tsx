@@ -196,7 +196,7 @@ export default function FormCreateProduct() {
                   </Box>
                 </Stack>
                 <Button
-                  onClick={() => navigate('/MyStore/' + store.id)}
+                  // onClick={() => navigate('/Loading')}
                   fontFamily={'heading'}
                   type="submit"
                   // loadingText="Submitting"

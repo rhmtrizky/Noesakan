@@ -12,6 +12,7 @@ import CreateStore from './pages/createStore';
 import RoomDiscuss from './pages/roomDiscuss';
 import ArticleList from './pages/article';
 import UpdateStore from './pages/updateStore';
+import Loading from './components/Loading';
 
 function App() {
   //   const [isLoading, setIsLoading] =useState<boolean>(true)
@@ -106,6 +107,10 @@ function App() {
           <Route
             path="/DetailArticle"
             element={<DetailArticle />}
+          />
+          <Route
+            path="/Loading"
+            element={<Loading />}
           />
         </Routes>
       </div>

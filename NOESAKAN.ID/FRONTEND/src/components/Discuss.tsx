@@ -14,6 +14,12 @@ export default function Article() {
 
   const [thread, setThread] = useState<IGetThreads[]>([]);
 
+  const data = thread.map((item) => {
+    return {
+      image: item.user?.image,
+    };
+  });
+
   async function fetchData() {
     try {
       const res = await API.get('/thread/', {
@@ -27,6 +33,7 @@ export default function Article() {
     }
   }
   console.log(thread);
+  console.log('ehemm', data);
 
   useEffect(() => {
     fetchData();
@@ -106,7 +113,7 @@ export default function Article() {
                       size="sm"
                       height="40px"
                       width="40px"
-                      src="https://th.bing.com/th/id/OIP.IIJIg03KabRNrHxnTNxJzgHaJQ?w=192&h=240&c=7&r=0&o=5&dpr=1.4&pid=1.7"
+                      src={data && data ? data : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
                     />
                     <Input
                       placeholder="Apa yang Anda pikirkan?"
@@ -170,7 +177,7 @@ export default function Article() {
                     >
                       <Avatar
                         size="md"
-                        src={item.user?.image && item.user.image ? item.user.image : 'https://th.bing.com/th/id/OIP.IIJIg03KabRNrHxnTNxJzgHaJQ?w=192&h=240&c=7&r=0&o=5&dpr=1.4&pid=1.7'}
+                        src={item.user?.image && item.user?.image ? item.user?.image : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
                         // src="https://th.bing.com/th/id/OIP.IIJIg03KabRNrHxnTNxJzgHaJQ?w=192&h=240&c=7&r=0&o=5&dpr=1.4&pid=1.7"
                       />
                       <Box ml={4}>
@@ -193,7 +200,7 @@ export default function Article() {
                     </Box>
                     <Box mt={6}>
                       <Text
-                        fontWeight={600}
+                        fontWeight={400}
                         mb={2}
                       >
                         {/* Di Cari supplier ikan tuna segar untuk kebutuhan ekspor
@@ -202,8 +209,8 @@ export default function Article() {
                         {item.content}
                       </Text>
                       <Image
-                        src={item.image as string}
-                        alt="Gambar Terbaru"
+                        src={(item?.image ? item.image : '') as string}
+                        // alt="Gambar Terbaru"
                       />
                     </Box>
                     <Box
@@ -277,7 +284,7 @@ export default function Article() {
                         size="sm"
                         height="50px"
                         width="50px"
-                        src="https://th.bing.com/th/id/OIP.IIJIg03KabRNrHxnTNxJzgHaJQ?w=192&h=240&c=7&r=0&o=5&dpr=1.4&pid=1.7"
+                        src={item.user?.image && item.user?.image ? item.user?.image : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
                       />
                       <Input
                         placeholder="tambahkan komentar"

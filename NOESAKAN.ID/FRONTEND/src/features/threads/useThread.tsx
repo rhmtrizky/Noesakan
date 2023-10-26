@@ -1,5 +1,6 @@
-import { API } from "../../lib/api";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { API } from '../../lib/api';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 
 export function useThreadCard() {
   interface IGetThreads {
@@ -7,9 +8,12 @@ export function useThreadCard() {
     image?: MediaSource | Blob | string;
     user?: number;
   }
+
+  const navigate = useNavigate();
+
   const [form, setForm] = useState<IGetThreads>({
-    content: "",
-    image: "",
+    content: '',
+    image: '',
   });
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -27,7 +31,7 @@ export function useThreadCard() {
     }
   }
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -47,15 +51,17 @@ export function useThreadCard() {
   async function postData() {
     try {
       const formData = new FormData();
-      formData.append("content", form.content as string);
-      formData.append("image", form.image as File);
+      formData.append('content', form.content as string);
+      formData.append('image', form.image as File);
       //   fetchData();
-      const res = await API.post("/thread/", formData, { headers });
+      const res = await API.post('/thread/create', formData, { headers });
       console.log(res.config.data);
-      console.log("data", formData);
+      console.log('data', formData);
       setForm(res.data);
+      // navigate('/DiscussGrup');
+      window.location.reload();
     } catch (error) {
-      console.error({ error: "salah ya ni" });
+      console.error({ error: 'salah ya ni' });
     }
   }
 
